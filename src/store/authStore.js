@@ -1,8 +1,6 @@
 // stores/authStore.js
 import { defineStore } from "pinia";
 import { authApi } from "../services/api";
-import { useRouter } from 'vue-router';
-const router = useRouter()
 export const useAuthStore = defineStore("auth", {
   state: () => ({
     isLoggedIn: localStorage.getItem("isLoggedIn") === 'true',
@@ -27,7 +25,7 @@ export const useAuthStore = defineStore("auth", {
           throw new Error("Login failed. No token received.");
         }
       } catch (error) {
-        return { success: false, message: error.message };
+        return { success: false, message: "Invalid login or password!"};
       }
     },
     logout() {
