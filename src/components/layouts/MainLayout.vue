@@ -13,5 +13,13 @@ import NavBar from '../NavBar.vue';
         </n-layout>
     </div>
 </template>
+<style scoped>
+.n-layout {
+    width: 100%;
+}
 
-<style scoped></style>
+.n-layout-content {
+    max-width: 1200px;
+    margin: 10px auto;
+}
+</style>

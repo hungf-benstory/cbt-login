@@ -60,7 +60,7 @@ const handleLogin = async (e) => {
         <n-card class="login-card">
             <n-grid responsive="screen" cols="1 s:1 m:2 l:2 xl:2" x-gap="12">
                 <n-gi class="image-container">
-                    <n-image width="100%" preview-disabled :src="imgLogin"/>
+                    <n-image width="100%" preview-disabled :src="imgLogin" />
                     <div style="text-align: center;">
                         <n-text underline>Create an account?</n-text>
                     </div>
@@ -138,7 +138,7 @@ const handleLogin = async (e) => {
     }
 
     .login-card {
-        margin: 0 25%;
+        margin: 0 24%;
         max-height: fit-content;
     }
 }

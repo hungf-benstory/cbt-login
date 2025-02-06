@@ -66,5 +66,6 @@ const pagination = false;
 </script>
 
 <template>
+  <h1>Test call api with token</h1>
   <n-data-table :columns="columns" :data="certificatesData" :pagination="pagination" :bordered="false" />
 </template>
