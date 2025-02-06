@@ -4,7 +4,7 @@ import { useMessage, NCard, NForm, NFormItem, NInput, NButton, NImage, NText, NG
 import { LockClosedOutline, PersonOutline } from "@vicons/ionicons5";
 import { useAuthStore } from '../store/authStore';
 import { useRouter } from 'vue-router';
-
+import imgLogin from '@/assets/images/login.svg';
 const authStore = useAuthStore();
 const router = useRouter()
 const formRef = ref(null);
@@ -34,16 +34,16 @@ const rules = {
 
 const handleLogin = async (e) => {
     e.preventDefault();
-    const urlRedirect = localStorage.getItem("redirectUrl")||"/"
+    const urlRedirect = localStorage.getItem("redirectUrl") || "/"
     formRef.value?.validate(async (errors) => {
         if (!errors) {
-            isLoadind.value = true; 
+            isLoadind.value = true;
             const result = await authStore.login(formValue.value.user);
-            isLoadind.value = false; 
+            isLoadind.value = false;
 
             if (result.success) {
                 message.success(result.message);
-                return router.replace(`${urlRedirect}`); 
+                return router.replace(`${urlRedirect}`);
             } else {
                 message.error(result.message);
             }
@@ -60,8 +60,7 @@ const handleLogin = async (e) => {
         <n-card class="login-card">
             <n-grid responsive="screen" cols="1 s:1 m:2 l:2 xl:2" x-gap="12">
                 <n-gi class="image-container">
-                    <n-image width="100%" preview-disabled	
-                             src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/authentication/illustration.svg" />
+                    <n-image width="100%" preview-disabled :src="imgLogin"/>
                     <div style="text-align: center;">
                         <n-text underline>Create an account?</n-text>
                     </div>
@@ -84,11 +83,7 @@ const handleLogin = async (e) => {
                             </n-input>
                         </n-form-item>
                         <n-form-item>
-                            <n-button 
-                                size="large" 
-                                @click="handleLogin" 
-                                type="info" 
-                                :loading="isLoadind" 
+                            <n-button size="large" @click="handleLogin" type="info" :loading="isLoadind"
                                 :disabled="isLoadind">
                                 Log in
                             </n-button>
