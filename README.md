@@ -1,14 +1,14 @@
-Login basic vue with NaiveUI
+#Login basic vue with NaiveUI
 
-# Vue 3
-# Vite
-# Pinia
-# NaiveUI
-# Axios
+ Vue 3
+ Vite
+ Pinia
+ NaiveUI
+ Axios
 
 
-Run project : 
-# yarn
-# yarn dev
-port:3000
+#Run project : 
+ yarn
+ yarn dev
+ port:3000
 
