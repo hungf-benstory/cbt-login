@@ -1,7 +1,7 @@
 <script setup>
 import { ref } from "vue";
-import { useMessage, NCard, NForm, NFormItem, NInput, NButton, NImage, NText, NGrid, NGi, NIcon, NCheckbox, NA } from "naive-ui";
-import { LockClosedOutline, PersonOutline, LogoFacebook, LogoTwitter, LogoGoogle, EyeOutline, EyeOffOutline, LogoFirebase } from "@vicons/ionicons5";
+import { useMessage, NCard, NForm, NFormItem, NInput, NModal, NButton, NImage, NText, NGrid, NGi, NIcon, NCheckbox, NA } from "naive-ui";
+import { LockClosedOutline, PersonOutline, LogoFacebook, MailUnreadOutline, LogoGoogle, EyeOutline, EyeOffOutline, LogoFirebase } from "@vicons/ionicons5";
 import { useAuthStore } from '../store/authStore';
 import { useRouter } from 'vue-router';
 import imgLogin from '@/assets/images/login.svg';
@@ -12,6 +12,7 @@ const message = useMessage();
 const isLoadind = ref(false);
 const showPassword = ref(false);
 const isFirebaseLogin = ref(false);
+const showModal = ref(false);
 const formValue = ref({
     user: {
         user_id: "",
@@ -59,6 +60,9 @@ const handleLogin = async (e) => {
 </script>
 
 <template>
+
+
+
     <div class="login-page">
         <n-card class="login-card">
             <n-grid responsive="screen" cols="1 s:1 m:2 l:2 xl:2" x-gap="12">
@@ -94,7 +98,7 @@ const handleLogin = async (e) => {
                         </n-form-item>
                         <div class="login-options">
                             <n-checkbox v-model="rememberMe" class="custom-checkbox">Remember me</n-checkbox>
-                            <n-a style="color: #3182ce">
+                            <n-a style="color: #3182ce" @click="showModal = true">
                                 Forgot your password?
                             </n-a>
                         </div>
@@ -126,6 +130,21 @@ const handleLogin = async (e) => {
                 </n-gi>
             </n-grid>
         </n-card>
+        <n-modal v-model:show="showModal">
+            <n-card style="width: 400px" title="Verify your Email" :bordered="false" size="huge" role="dialog"
+                aria-modal="true">
+                <n-input placeholder="Email get OTP">
+                    <template #prefix>
+                        <n-icon :component="MailUnreadOutline" />
+                    </template>
+                </n-input>
+                &nbsp;
+                <div></div>
+                <n-button type="info" style="float:right">
+                    Get OTP
+                </n-button>
+            </n-card>
+        </n-modal>
     </div>
 </template>
 
@@ -212,7 +231,6 @@ const handleLogin = async (e) => {
 
 }
 
-
 .n-input {
     padding: 10px;
     border: none;
@@ -270,11 +288,9 @@ const handleLogin = async (e) => {
     color: #0056b3;
 }
 
-.custom-checkbox .n-checkbox__icon--checked {
+.n-checkbox .n-checkbox-box .n-checkbox-icon {
     background-color: red;
-    /* Màu nền khi checkbox được check */
     border-color: red;
-    /* Màu viền khi checkbox được check */
 }
 
 .divider {
