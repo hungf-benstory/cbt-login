@@ -1,6 +1,6 @@
 <script setup>
 import { ref } from "vue";
-import { useMessage, NCard, NForm, NFormItem, NInput, NButton, NImage, NText, NGrid, NGi, NIcon, NCheckbox } from "naive-ui";
+import { useMessage, NCard, NForm, NFormItem, NInput, NButton, NImage, NText, NGrid, NGi, NIcon, NCheckbox, NA } from "naive-ui";
 import { LockClosedOutline, PersonOutline, LogoFacebook, LogoTwitter, LogoGoogle, EyeOutline, EyeOffOutline, LogoFirebase } from "@vicons/ionicons5";
 import { useAuthStore } from '../store/authStore';
 import { useRouter } from 'vue-router';
@@ -56,8 +56,6 @@ const handleLogin = async (e) => {
     });
 };
 
-
-
 </script>
 
 <template>
@@ -67,11 +65,13 @@ const handleLogin = async (e) => {
                 <n-gi class="image-container">
                     <n-image width="100%" preview-disabled :src="imgLogin" />
                     <div style="text-align: center;">
-                        <n-text underline>Create an account?</n-text>
+                        <n-a href="#">
+                            <n-text underline>Create an account?</n-text>
+                        </n-a>
                     </div>
                 </n-gi>
                 <n-gi>
-                    <h1 style="padding-bottom: 20px">Login</h1>
+                    <h1 style="padding-bottom: 20px">Sign in to your account</h1>
                     <n-form ref="formRef" :label-width="80" :model="formValue" :rules="rules">
                         <n-form-item label="Username" path="user.user_id">
                             <n-input v-model:value="formValue.user.user_id" placeholder="Username">
@@ -93,18 +93,21 @@ const handleLogin = async (e) => {
                             </n-input>
                         </n-form-item>
                         <div class="login-options">
-                            <n-checkbox v-model="rememberMe">Remember me</n-checkbox>
-                            <n-link href="#" class="forgot-password-link">
+                            <n-checkbox v-model="rememberMe" class="custom-checkbox">Remember me</n-checkbox>
+                            <n-a style="color: #3182ce">
                                 Forgot your password?
-                            </n-link>
+                            </n-a>
                         </div>
                         <n-form-item>
                             <n-button class="btn-login" size="large" @click="handleLogin" type="info"
                                 :loading="isLoadind" :disabled="isLoadind">
-                                Log in
+                                Sign in
                             </n-button>
                         </n-form-item>
                     </n-form>
+                    <div class="sign-up">
+                        <span>Don’t have an account yet?<n-a style="color: #3182ce"> Sign up</n-a> </span>
+                    </div>
                     <div class="divider">
                         <span>Or continue with</span>
                     </div>
@@ -159,6 +162,7 @@ const handleLogin = async (e) => {
     .n-card.n-card--bordered {
         border: none;
     }
+
 }
 
 @media (min-width: 768px) {
@@ -204,6 +208,8 @@ const handleLogin = async (e) => {
     .image-container .n-text:hover {
         text-decoration: underline;
     }
+
+
 }
 
 
@@ -242,8 +248,9 @@ const handleLogin = async (e) => {
     margin-bottom: 8px;
 }
 
-
-
+.sign-up {
+    margin-top: -20px;
+}
 
 .login-options {
     display: flex;
@@ -261,5 +268,44 @@ const handleLogin = async (e) => {
 .social-login .social-icon:hover {
     transform: scale(1.2);
     color: #0056b3;
+}
+
+.custom-checkbox .n-checkbox__icon--checked {
+    background-color: red;
+    /* Màu nền khi checkbox được check */
+    border-color: red;
+    /* Màu viền khi checkbox được check */
+}
+
+.divider {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 24px 0;
+}
+
+.divider::before,
+.divider::after {
+    content: '';
+    flex-grow: 1;
+    height: 1px;
+    background-color: #e2e8f0;
+}
+
+.divider::before {
+    margin-right: 8px;
+}
+
+.divider::after {
+    margin-left: 8px;
+}
+
+.social-login {
+    display: flex;
+    justify-content: space-around;
+}
+
+.social-btn {
+    padding: 0;
 }
 </style>
