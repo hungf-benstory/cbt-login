@@ -1,7 +1,7 @@
 <script setup>
 import { ref } from "vue";
-import { useMessage, NCard, NForm, NFormItem, NInput, NButton, NImage, NText, NGrid, NGi, NIcon } from "naive-ui";
-import { LockClosedOutline, PersonOutline } from "@vicons/ionicons5";
+import { useMessage, NCard, NForm, NFormItem, NInput, NButton, NImage, NText, NGrid, NGi, NIcon, NCheckbox } from "naive-ui";
+import { LockClosedOutline, PersonOutline, LogoFacebook, LogoTwitter, LogoGoogle, EyeOutline, EyeOffOutline, LogoFirebase } from "@vicons/ionicons5";
 import { useAuthStore } from '../store/authStore';
 import { useRouter } from 'vue-router';
 import imgLogin from '@/assets/images/login.svg';
@@ -10,6 +10,8 @@ const router = useRouter()
 const formRef = ref(null);
 const message = useMessage();
 const isLoadind = ref(false);
+const showPassword = ref(false);
+const isFirebaseLogin = ref(false);
 const formValue = ref({
     user: {
         user_id: "",
@@ -53,6 +55,9 @@ const handleLogin = async (e) => {
         }
     });
 };
+
+
+
 </script>
 
 <template>
@@ -66,7 +71,7 @@ const handleLogin = async (e) => {
                     </div>
                 </n-gi>
                 <n-gi>
-                    <h1 style="padding-bottom: 20px">Log In</h1>
+                    <h1 style="padding-bottom: 20px">Login</h1>
                     <n-form ref="formRef" :label-width="80" :model="formValue" :rules="rules">
                         <n-form-item label="Username" path="user.user_id">
                             <n-input v-model:value="formValue.user.user_id" placeholder="Username">
@@ -76,19 +81,45 @@ const handleLogin = async (e) => {
                             </n-input>
                         </n-form-item>
                         <n-form-item label="Password" path="user.password">
-                            <n-input v-model:value="formValue.user.password" type="password" placeholder="Password">
+                            <n-input v-model:value="formValue.user.password" :type="showPassword ? 'text' : 'password'"
+                                placeholder="Password">
                                 <template #prefix>
                                     <n-icon :component="LockClosedOutline" />
                                 </template>
+                                <template #suffix>
+                                    <n-icon :component="showPassword ? EyeOutline : EyeOffOutline"
+                                        style="cursor: pointer" @click="showPassword = !showPassword" />
+                                </template>
                             </n-input>
                         </n-form-item>
+                        <div class="login-options">
+                            <n-checkbox v-model="rememberMe">Remember me</n-checkbox>
+                            <n-link href="#" class="forgot-password-link">
+                                Forgot your password?
+                            </n-link>
+                        </div>
                         <n-form-item>
-                            <n-button size="large" @click="handleLogin" type="info" :loading="isLoadind"
-                                :disabled="isLoadind">
+                            <n-button class="btn-login" size="large" @click="handleLogin" type="info"
+                                :loading="isLoadind" :disabled="isLoadind">
                                 Log in
                             </n-button>
                         </n-form-item>
                     </n-form>
+                    <div class="divider">
+                        <span>Or continue with</span>
+                    </div>
+
+                    <div class="social-login">
+                        <n-button class="social-btn" text>
+                            <n-icon class="social-icon" :component="LogoFirebase" />
+                        </n-button>
+                        <n-button class="social-btn" text>
+                            <n-icon class="social-icon" :component="LogoFacebook" />
+                        </n-button>
+                        <n-button class="social-btn" text>
+                            <n-icon class="social-icon" :component="LogoGoogle" />
+                        </n-button>
+                    </div>
                 </n-gi>
             </n-grid>
         </n-card>
@@ -111,20 +142,22 @@ const handleLogin = async (e) => {
         margin-bottom: 16px;
     }
 
-    .n-button {
+    .btn-login {
         width: 100%;
     }
 
     .login-page {
         display: flex;
         height: 100vh;
-        background-color: #f0f2f5;
+        background-color: #ffffff;
     }
 
     .login-card {
-        margin: 0;
-        border-radius: 40px;
-        max-height: fit-content;
+        box-shadow: none
+    }
+
+    .n-card.n-card--bordered {
+        border: none;
     }
 }
 
@@ -138,26 +171,59 @@ const handleLogin = async (e) => {
     }
 
     .login-card {
-        margin: 0 24%;
+        margin: auto;
+        max-width: 980px;
         max-height: fit-content;
+        padding: 20px;
+        background-color: #ffffff;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+
+    .image-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+    }
+
+    .image-container .n-image {
+        max-height: 300px;
+        width: auto;
+        height: auto;
+        object-fit: contain;
+    }
+
+    .image-container .n-text {
+        text-align: center;
+        cursor: pointer;
+    }
+
+    .image-container .n-text:hover {
+        text-decoration: underline;
     }
 }
 
+
 .n-input {
     padding: 10px;
+    border: none;
     border-radius: 8px;
-    border: 1px solid #d9d9d9;
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    background-color: #f0f0f0;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .n-input:hover {
-    border-color: #409eff;
+    background-color: #e0e0e0;
 }
 
 .n-input:focus {
-    border-color: #409eff;
+    background-color: #ffffff;
     box-shadow: 0 0 0 2px rgba(64, 158, 255, 0.2);
 }
+
 
 .n-button {
     border-radius: 8px;
@@ -165,7 +231,6 @@ const handleLogin = async (e) => {
 }
 
 .n-button:hover {
-    background-color: #409eff;
     transform: translateY(-2px);
 }
 
@@ -177,34 +242,24 @@ const handleLogin = async (e) => {
     margin-bottom: 8px;
 }
 
-.login-card {
-    padding: 20px;
-    background-color: #ffffff;
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-}
 
-.image-container {
+
+
+.login-options {
     display: flex;
-    flex-direction: column;
+    justify-content: space-between;
     align-items: center;
-    justify-content: center;
-    padding: 20px;
+    margin-top: 16px;
 }
 
-.image-container .n-image {
-    max-height: 300px;
-    width: auto;
-    height: auto;
-    object-fit: contain;
+.social-login .social-icon {
+    font-size: 24px;
+    color: #007bff;
+    transition: transform 0.3s ease-in-out;
 }
 
-.image-container .n-text {
-    text-align: center;
-    cursor: pointer;
-}
-
-.image-container .n-text:hover {
-    text-decoration: underline;
+.social-login .social-icon:hover {
+    transform: scale(1.2);
+    color: #0056b3;
 }
 </style>
