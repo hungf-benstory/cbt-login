@@ -87,7 +87,7 @@ const getOTP = () => {
 
 <template>
     <div class="login-page">
-        <div class="login-card">
+        <n-card class="login-card">
             <!-- <div style="text-align: center;">
                 <n-image height="100px" preview-disabled :src="imgLogo" />
             </div> -->
@@ -100,90 +100,88 @@ const getOTP = () => {
                         </n-a>
                     </div>
                 </n-gi>
-                <n-gi class="login-form">
-                    <div style="padding:20px"> 
-                        <h1 v-if="!isSignUp" style="padding-bottom: 20px">Sign in to your account</h1>
-                        <h1 v-else style="padding-bottom: 20px">Create your account?</h1>
-                        <n-form ref="formRef" :label-width="80" :model="formValue" :rules="rules">
-                            <n-form-item v-if="isSignUp" label="Email" path="user.user_id">
-                                <n-input v-model:value="formValue.user.user_id" placeholder="Email">
-                                    <template #prefix>
-                                        <n-icon :component="PersonOutline" />
-                                    </template>
-                                </n-input>
-                            </n-form-item>
-                            <n-form-item v-else label="Username" path="user.user_id">
-                                <n-input v-model:value="formValue.user.user_id" placeholder="Username">
-                                    <template #prefix>
-                                        <n-icon :component="PersonOutline" />
-                                    </template>
-                                </n-input>
-                            </n-form-item>
-                            <n-form-item label="Password" path="user.password">
-                                <n-input v-model:value="formValue.user.password"
-                                    :type="showPassword ? 'text' : 'password'" placeholder="Password">
-                                    <template #prefix>
-                                        <n-icon :component="LockClosedOutline" />
-                                    </template>
-                                    <template #suffix>
-                                        <n-icon :component="showPassword ? EyeOutline : EyeOffOutline"
-                                            style="cursor: pointer" @click="showPassword = !showPassword" />
-                                    </template>
-                                </n-input>
-                            </n-form-item>
-                            <n-form-item v-show="isSignUp" label="Confirm password" path="user.password_confirm">
-                                <n-input v-model:value="formValue.user.password"
-                                    :type="showPassword ? 'text' : 'password'" placeholder="Password">
-                                    <template #prefix>
-                                        <n-icon :component="LockClosedOutline" />
-                                    </template>
-                                    <template #suffix>
-                                        <n-icon :component="showPassword ? EyeOutline : EyeOffOutline"
-                                            style="cursor: pointer" @click="showPassword = !showPassword" />
-                                    </template>
-                                </n-input>
-                            </n-form-item>
-                            <div v-show="!isSignUp" class="login-options">
-                                <n-checkbox v-model="rememberMe" class="custom-checkbox">Remember me</n-checkbox>
-                                <n-a style="color: #3182ce" @click="showModal = true">
-                                    Forgot your password?
-                                </n-a>
-                            </div>
-                            <n-form-item>
-                                <n-button v-if="!isSignUp" class="btn-login" size="large" @click="handleLogin"
-                                    type="info" :loading="isLoading" :disabled="isLoading">
-                                    Sign in
-                                </n-button>
-                                <n-button v-else class="btn-login" size="large" @click="handleSignUp" type="info"
-                                    :loading="isLoading" :disabled="isLoading">
-                                    Sign up
-                                </n-button>
-                            </n-form-item>
-                        </n-form>
-                        <div class="sign-up">
-                            <span v-if="!isSignUp">Don’t have an account yet?
-                                <n-a style="color: #3182ce" @click="goSignUp()"> Sign up</n-a></span>
-                            <span v-else>Already have an account?
-                                <n-a style="color: #3182ce" @click="goSignUp()">Sign in</n-a></span>
+                <n-gi>
+                    <h1 v-if="!isSignUp" style="padding-bottom: 20px">Sign in to your account</h1>
+                    <h1 v-else style="padding-bottom: 20px">Create your account?</h1>
+                    <n-form ref="formRef" :label-width="80" :model="formValue" :rules="rules">
+                        <n-form-item v-if="isSignUp" label="Email" path="user.user_id">
+                            <n-input v-model:value="formValue.user.user_id" placeholder="Email">
+                                <template #prefix>
+                                    <n-icon :component="PersonOutline" />
+                                </template>
+                            </n-input>
+                        </n-form-item>
+                        <n-form-item v-else label="Username" path="user.user_id">
+                            <n-input v-model:value="formValue.user.user_id" placeholder="Username">
+                                <template #prefix>
+                                    <n-icon :component="PersonOutline" />
+                                </template>
+                            </n-input>
+                        </n-form-item>
+                        <n-form-item label="Password" path="user.password">
+                            <n-input v-model:value="formValue.user.password" :type="showPassword ? 'text' : 'password'"
+                                placeholder="Password">
+                                <template #prefix>
+                                    <n-icon :component="LockClosedOutline" />
+                                </template>
+                                <template #suffix>
+                                    <n-icon :component="showPassword ? EyeOutline : EyeOffOutline"
+                                        style="cursor: pointer" @click="showPassword = !showPassword" />
+                                </template>
+                            </n-input>
+                        </n-form-item>
+                        <n-form-item v-show="isSignUp" label="Confirm password" path="user.password_confirm">
+                            <n-input v-model:value="formValue.user.password" :type="showPassword ? 'text' : 'password'"
+                                placeholder="Password">
+                                <template #prefix>
+                                    <n-icon :component="LockClosedOutline" />
+                                </template>
+                                <template #suffix>
+                                    <n-icon :component="showPassword ? EyeOutline : EyeOffOutline"
+                                        style="cursor: pointer" @click="showPassword = !showPassword" />
+                                </template>
+                            </n-input>
+                        </n-form-item>
+                        <div v-show="!isSignUp" class="login-options">
+                            <n-checkbox v-model="rememberMe" class="custom-checkbox">Remember me</n-checkbox>
+                            <n-a style="color: #3182ce" @click="showModal = true">
+                                Forgot your password?
+                            </n-a>
                         </div>
-                        <div class="divider">
-                            <span>Or continue with</span>
-                        </div>
-                        <div class="social-login">
-                            <n-button class="social-btn" text>
-                                <n-icon class="social-icon" :component="LogoFirebase" />
+                        <n-form-item>
+                            <n-button v-if="!isSignUp" class="btn-login" size="large" @click="handleLogin" type="info"
+                                :loading="isLoading" :disabled="isLoading">
+                                Sign in
                             </n-button>
-                            <n-button class="social-btn" text>
-                                <n-icon class="social-icon" :component="LogoFacebook" />
+                            <n-button v-else class="btn-login" size="large" @click="handleSignUp" type="info"
+                                :loading="isLoading" :disabled="isLoading">
+                                Sign up
                             </n-button>
-                            <n-button class="social-btn" text>
-                                <n-icon class="social-icon" :component="LogoGoogle" />
-                            </n-button>
-                        </div>
+                        </n-form-item>
+                    </n-form>
+                    <div class="sign-up">
+                        <span v-if="!isSignUp">Don’t have an account yet?
+                            <n-a style="color: #3182ce" @click="goSignUp()"> Sign up</n-a></span>
+                        <span v-else>Already have an account?
+                            <n-a style="color: #3182ce" @click="goSignUp()">Sign in</n-a></span>
+                    </div>
+                    <div class="divider">
+                        <span>Or continue with</span>
+                    </div>
+                    <div class="social-login">
+                        <n-button class="social-btn" text>
+                            <n-icon class="social-icon" :component="LogoFirebase" />
+                        </n-button>
+                        <n-button class="social-btn" text>
+                            <n-icon class="social-icon" :component="LogoFacebook" />
+                        </n-button>
+                        <n-button class="social-btn" text>
+                            <n-icon class="social-icon" :component="LogoGoogle" />
+                        </n-button>
                     </div>
                 </n-gi>
             </n-grid>
-        </div>
+        </n-card>
         <n-modal v-model:show="showModal">
             <n-card style="width: 400px" title="Verify your Email" :bordered="false" size="huge" role="dialog"
                 aria-modal="true">
@@ -223,9 +221,9 @@ const getOTP = () => {
     }
 
     .login-page {
+        display: flex;
         height: 100vh;
-        /* background-color: #D9BD32; */
-        padding: 20px
+        background-color: #ffffff;
     }
 
     .login-card {
@@ -244,24 +242,17 @@ const getOTP = () => {
         justify-content: center;
         align-items: center;
         height: 100vh;
-
-        /* background-color: #D9BD32; */
+        background-color: #f0f2f5;
     }
 
     .login-card {
         margin: auto;
         max-width: 980px;
         max-height: fit-content;
+        padding: 20px;
         background-color: #ffffff;
         border-radius: 12px;
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-        background-color: #B0BAC3;
-    }
-
-    .login-form {
-        border-top-left-radius: 20px 20px;
-        border-bottom-left-radius: 20px 20px;
-        background-color: #FFF;
     }
 
 
@@ -271,7 +262,6 @@ const getOTP = () => {
         align-items: center;
         justify-content: center;
         padding: 20px; */
-        background-color: #B0BAC3;
     }
 
     .image-container .n-image {
