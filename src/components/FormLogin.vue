@@ -9,7 +9,7 @@ const authStore = useAuthStore();
 const router = useRouter()
 const formRef = ref(null);
 const message = useMessage();
-const isLoadind = ref(false);
+const isLoading = ref(false);
 const showPassword = ref(false);
 const isFirebaseLogin = ref(false);
 const showModal = ref(false);
@@ -40,9 +40,9 @@ const handleLogin = async (e) => {
     const urlRedirect = localStorage.getItem("redirectUrl") || "/"
     formRef.value?.validate(async (errors) => {
         if (!errors) {
-            isLoadind.value = true;
+            isLoading.value = true;
             const result = await authStore.login(formValue.value.user);
-            isLoadind.value = false;
+            isLoading.value = false;
 
             if (result.success) {
                 message.success(result.message);
@@ -57,12 +57,13 @@ const handleLogin = async (e) => {
     });
 };
 
+const getOTP = () => {
+    message.error("");
+}
+
 </script>
 
 <template>
-
-
-
     <div class="login-page">
         <n-card class="login-card">
             <n-grid responsive="screen" cols="1 s:1 m:2 l:2 xl:2" x-gap="12">
@@ -104,7 +105,7 @@ const handleLogin = async (e) => {
                         </div>
                         <n-form-item>
                             <n-button class="btn-login" size="large" @click="handleLogin" type="info"
-                                :loading="isLoadind" :disabled="isLoadind">
+                                :loading="isLoading" :disabled="isLoading">
                                 Sign in
                             </n-button>
                         </n-form-item>
@@ -140,7 +141,7 @@ const handleLogin = async (e) => {
                 </n-input>
                 &nbsp;
                 <div></div>
-                <n-button type="info" style="float:right">
+                <n-button type="info" style="float:right" @click="getOTP">
                     Get OTP
                 </n-button>
             </n-card>
